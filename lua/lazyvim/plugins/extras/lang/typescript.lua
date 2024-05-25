@@ -1,4 +1,28 @@
+local inlay_hints_settings = {
+  includeInlayEnumMemberValueHints = true,
+  includeInlayFunctionLikeReturnTypeHints = true,
+  includeInlayFunctionParameterTypeHints = true,
+  includeInlayParameterNameHints = "literal",
+  includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+  includeInlayPropertyDeclarationTypeHints = true,
+  includeInlayVariableTypeHints = false,
+  includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+}
+
 return {
+  recommended = function()
+    return LazyVim.extras.wants({
+      ft = {
+        "javascript",
+        "javascriptreact",
+        "javascript.jsx",
+        "typescript",
+        "typescriptreact",
+        "typescript.tsx",
+      },
+      root = { "tsconfig.json", "package.json", "jsconfig.json" },
+    })
+  end,
 
   -- add typescript to treesitter
   {
@@ -48,18 +72,10 @@ return {
           },
           settings = {
             typescript = {
-              format = {
-                indentSize = vim.o.shiftwidth,
-                convertTabsToSpaces = vim.o.expandtab,
-                tabSize = vim.o.tabstop,
-              },
+              inlayHints = inlay_hints_settings,
             },
             javascript = {
-              format = {
-                indentSize = vim.o.shiftwidth,
-                convertTabsToSpaces = vim.o.expandtab,
-                tabSize = vim.o.tabstop,
-              },
+              inlayHints = inlay_hints_settings,
             },
             completions = {
               completeFunctionCalls = true,
@@ -69,6 +85,7 @@ return {
       },
     },
   },
+
   {
     "mfussenegger/nvim-dap",
     optional = true,
@@ -99,6 +116,20 @@ return {
           },
         }
       end
+      if not dap.adapters["node"] then
+        dap.adapters["node"] = function(cb, config)
+          if config.type == "node" then
+            config.type = "pwa-node"
+          end
+          local nativeAdapter = dap.adapters["pwa-node"]
+          if type(nativeAdapter) == "function" then
+            nativeAdapter(cb, config)
+          else
+            cb(nativeAdapter)
+          end
+        end
+      end
+
       for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact" }) do
         if not dap.configurations[language] then
           dap.configurations[language] = {
