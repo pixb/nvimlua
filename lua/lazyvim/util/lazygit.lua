@@ -32,7 +32,11 @@ M.theme = {
   unstagedChangesColor = { fg = "DiagnosticError" },
 }
 
+<<<<<<< HEAD
 M.theme_path = LazyVim.norm(vim.fn.stdpath("cache") .. "/lazygit-theme.yml")
+=======
+M.theme_path = vim.fn.stdpath("cache") .. "/lazygit-theme.yml"
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
 
 -- re-create config file on startup
 M.dirty = true
@@ -69,7 +73,11 @@ function M.open(opts)
       local ok, lines = pcall(Process.exec, { "lazygit", "-cd" })
       if ok then
         M.config_dir = lines[1]
+<<<<<<< HEAD
         vim.env.LG_CONFIG_FILE = LazyVim.norm(M.config_dir .. "/config.yml" .. "," .. M.theme_path)
+=======
+        vim.env.LG_CONFIG_FILE = M.config_dir .. "/config.yml" .. "," .. M.theme_path
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
       else
         ---@diagnostic disable-next-line: cast-type-mismatch
         ---@cast lines string
@@ -154,8 +162,12 @@ function M.blame_line(opts)
   local cursor = vim.api.nvim_win_get_cursor(0)
   local line = cursor[1]
   local file = vim.api.nvim_buf_get_name(0)
+<<<<<<< HEAD
   local root = LazyVim.root.detectors.pattern(0, { ".git" })[1]
   local cmd = { "git", "-C", root, "log", "-n", opts.count, "-u", "-L", line .. ",+1:" .. file }
+=======
+  local cmd = { "git", "log", "-n", opts.count, "-u", "-L", line .. ",+1:" .. file }
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
   return require("lazy.util").float_cmd(cmd, opts)
 end
 

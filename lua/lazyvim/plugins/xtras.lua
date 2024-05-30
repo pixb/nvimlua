@@ -5,7 +5,10 @@ local prios = {
   ["lazyvim.plugins.extras.editor.aerial"] = 100,
   ["lazyvim.plugins.extras.editor.outline"] = 100,
   ["lazyvim.plugins.extras.editor.trouble-v3"] = 100,
+<<<<<<< HEAD
   ["lazyvim.plugins.extras.ui.edgy"] = 2,
+=======
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
   ["lazyvim.plugins.extras.test.core"] = 1,
   ["lazyvim.plugins.extras.dap.core"] = 1,
 }

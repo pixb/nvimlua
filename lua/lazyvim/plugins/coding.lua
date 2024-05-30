@@ -103,6 +103,10 @@ return {
             "garymjr/nvim-snippets",
             opts = {
               friendly_snippets = true,
+<<<<<<< HEAD
+=======
+              global_snippets = { "all", "global" },
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
             },
             dependencies = { "rafamadriz/friendly-snippets" },
           },

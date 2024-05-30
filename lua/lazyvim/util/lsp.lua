@@ -44,7 +44,11 @@ function M.setup()
     local ret = register_capability(err, res, ctx)
     local client = vim.lsp.get_client_by_id(ctx.client_id)
     if client then
+<<<<<<< HEAD
       for buffer in pairs(client.attached_buffers) do
+=======
+      for buffer in ipairs(client.attached_buffers) do
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
         vim.api.nvim_exec_autocmds("User", {
           pattern = "LspDynamicCapability",
           data = { client_id = client.id, buffer = buffer },
@@ -210,9 +214,14 @@ function M.format(opts)
   end
 end
 
+<<<<<<< HEAD
 ---@alias LspWord {from:{[1]:number, [2]:number}, to:{[1]:number, [2]:number}} 1-0 indexed
 M.words = {}
 M.words.enabled = false
+=======
+---@alias LspWord {from:{[1]:number, [2]:number}, to:{[1]:number, [2]:number}, current?:boolean} 1-0 indexed
+M.words = {}
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
 M.words.ns = vim.api.nvim_create_namespace("vim_lsp_references")
 
 ---@param opts? {enabled?: boolean}
@@ -221,13 +230,19 @@ function M.words.setup(opts)
   if not opts.enabled then
     return
   end
+<<<<<<< HEAD
   M.words.enabled = true
+=======
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
   local handler = vim.lsp.handlers["textDocument/documentHighlight"]
   vim.lsp.handlers["textDocument/documentHighlight"] = function(err, result, ctx, config)
     if not vim.api.nvim_buf_is_loaded(ctx.bufnr) then
       return
     end
+<<<<<<< HEAD
     vim.lsp.buf.clear_references()
+=======
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
     return handler(err, result, ctx, config)
   end
 
@@ -236,10 +251,14 @@ function M.words.setup(opts)
       group = vim.api.nvim_create_augroup("lsp_word_" .. buf, { clear = true }),
       buffer = buf,
       callback = function(ev)
+<<<<<<< HEAD
         if not require("lazyvim.plugins.lsp.keymaps").has(buf, "documentHighlight") then
           return false
         end
         if not ({ M.words.get() })[2] then
+=======
+        if not M.words.at() then
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
           if ev.event:find("CursorMoved") then
             vim.lsp.buf.clear_references()
           else
@@ -251,6 +270,7 @@ function M.words.setup(opts)
   end)
 end
 
+<<<<<<< HEAD
 ---@return LspWord[] words, number? current
 function M.words.get()
   local cursor = vim.api.nvim_win_get_cursor(0)
@@ -280,6 +300,40 @@ function M.words.jump(count, cycle)
     idx = (idx - 1) % #words + 1
   end
   local target = words[idx]
+=======
+---@return LspWord[]
+function M.words.get()
+  local cursor = vim.api.nvim_win_get_cursor(0)
+  return vim.tbl_map(function(extmark)
+    local ret = {
+      from = { extmark[2] + 1, extmark[3] },
+      to = { extmark[4].end_row + 1, extmark[4].end_col },
+    }
+    if cursor[1] >= ret.from[1] and cursor[1] <= ret.to[1] and cursor[2] >= ret.from[2] and cursor[2] <= ret.to[2] then
+      ret.current = true
+    end
+    return ret
+  end, vim.api.nvim_buf_get_extmarks(0, M.words.ns, 0, -1, { details = true }))
+end
+
+---@param words? LspWord[]
+---@return LspWord?, number?
+function M.words.at(words)
+  for idx, word in ipairs(words or M.words.get()) do
+    if word.current then
+      return word, idx
+    end
+  end
+end
+
+function M.words.jump(count)
+  local words = M.words.get()
+  local _, idx = M.words.at(words)
+  if not idx then
+    return
+  end
+  local target = words[idx + count]
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
   if target then
     vim.api.nvim_win_set_cursor(0, target.from)
   end

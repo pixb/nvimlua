@@ -2,7 +2,11 @@ local inlay_hints_settings = {
   includeInlayEnumMemberValueHints = true,
   includeInlayFunctionLikeReturnTypeHints = true,
   includeInlayFunctionParameterTypeHints = true,
+<<<<<<< HEAD
   includeInlayParameterNameHints = "literals",
+=======
+  includeInlayParameterNameHints = "literal",
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
   includeInlayParameterNameHintsWhenArgumentMatchesName = false,
   includeInlayPropertyDeclarationTypeHints = true,
   includeInlayVariableTypeHints = false,

@@ -132,7 +132,11 @@ local defaults = {
 }
 
 M.json = {
+<<<<<<< HEAD
   version = 5,
+=======
+  version = 4,
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
   data = {
     version = nil, ---@type string?
     news = {}, ---@type table<string, string>

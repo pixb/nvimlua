@@ -1,8 +1,11 @@
 ---@class lazyvim.util.cmp
 local M = {}
 
+<<<<<<< HEAD
 ---@alias Placeholder {n:number, text:string}
 
+=======
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
 ---@param snippet string
 ---@param fn fun(placeholder:Placeholder):string
 ---@return string
@@ -17,6 +20,7 @@ end
 ---@param snippet string
 ---@return string
 function M.snippet_preview(snippet)
+<<<<<<< HEAD
   local ok, parsed = pcall(function()
     return vim.lsp._snippet_grammar.parse(snippet)
   end)
@@ -24,14 +28,25 @@ function M.snippet_preview(snippet)
     or M.snippet_replace(snippet, function(placeholder)
       return M.snippet_preview(placeholder.text)
     end):gsub("%$0", "")
+=======
+  local ret = M.snippet_replace(snippet, function(placeholder)
+    return M.snippet_preview(placeholder.text)
+  end):gsub("%$0", "")
+  return ret
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
 end
 
 -- This function replaces nested placeholders in a snippet with LSP placeholders.
 function M.snippet_fix(snippet)
+<<<<<<< HEAD
   local texts = {} ---@type table<number, string>
   return M.snippet_replace(snippet, function(placeholder)
     texts[placeholder.n] = texts[placeholder.n] or M.snippet_preview(placeholder.text)
     return "${" .. placeholder.n .. ":" .. texts[placeholder.n] .. "}"
+=======
+  return M.snippet_replace(snippet, function(placeholder)
+    return "${" .. placeholder.n .. ":" .. M.snippet_preview(placeholder.text) .. "}"
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
   end)
 end
 
@@ -93,6 +108,7 @@ function M.confirm(opts)
 end
 
 function M.expand(snippet)
+<<<<<<< HEAD
   -- Native sessions don't support nested snippet sessions.
   -- Always use the top-level session.
   -- Otherwise, when on the first placeholder and selecting a new completion,
@@ -101,12 +117,19 @@ function M.expand(snippet)
   local session = vim.snippet.active() and vim.snippet._session or nil
 
   local ok, err = pcall(vim.snippet.expand, snippet)
+=======
+  local ok = pcall(vim.snippet.expand, snippet)
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
   if not ok then
     local fixed = M.snippet_fix(snippet)
     ok = pcall(vim.snippet.expand, fixed)
 
+<<<<<<< HEAD
     local msg = ok and "Failed to parse snippet,\nbut was able to fix it automatically."
       or ("Failed to parse snippet.\n" .. err)
+=======
+    local msg = ok and "Failed to parse snippet,\nbut was able to fix it automatically." or "Failed to parse snippet."
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
 
     LazyVim[ok and "warn" or "error"](
       ([[%s
@@ -116,11 +139,14 @@ function M.expand(snippet)
       { title = "vim.snippet" }
     )
   end
+<<<<<<< HEAD
 
   -- Restore top-level session when needed
   if session then
     vim.snippet._session = session
   end
+=======
+>>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
 end
 
 return M
