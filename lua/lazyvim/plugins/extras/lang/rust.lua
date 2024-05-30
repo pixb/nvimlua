@@ -90,15 +90,12 @@ return {
     },
     config = function(_, opts)
       vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, opts or {})
-<<<<<<< HEAD
       if vim.fn.executable("rust-analyzer") == 0 then
         LazyVim.error(
           "**rust-analyzer** not found in PATH, please install it.\nhttps://rust-analyzer.github.io/",
           { title = "rustaceanvim" }
         )
       end
-=======
->>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
     end,
   },
 
@@ -107,10 +104,6 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-<<<<<<< HEAD
-=======
-        rust_analyzer = {},
->>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
         taplo = {
           keys = {
             {
@@ -127,14 +120,6 @@ return {
           },
         },
       },
-<<<<<<< HEAD
-=======
-      setup = {
-        rust_analyzer = function()
-          return true
-        end,
-      },
->>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
     },
   },
 

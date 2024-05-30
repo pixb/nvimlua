@@ -40,10 +40,6 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-<<<<<<< HEAD
     opts = { document_highlight = { enabled = false } },
-=======
-    opts = { document_highlight = { enabed = false } },
->>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
   },
 }

@@ -26,11 +26,7 @@ return {
     ft = { "scala", "sbt", "java" },
     init = function()
       local metals_config = require("metals").bare_config()
-<<<<<<< HEAD
       metals_config.init_options.statusBarProvider = "off"
-=======
-      metals_config.init_options.statusBarProvider = "on"
->>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
       metals_config.settings = {
         showImplicitArguments = true,
         excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
@@ -74,7 +70,6 @@ return {
         },
       }
     end,
-<<<<<<< HEAD
     keys = {
       {
         "<leader>me",
@@ -93,8 +88,6 @@ return {
         ft = { "scala", "sbt", "java" },
       },
     },
-=======
->>>>>>> 126c89f7f739cd57788576ec17978bf930a7fd95
   },
   {
     "nvim-treesitter/nvim-treesitter",
