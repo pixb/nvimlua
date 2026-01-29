@@ -10,8 +10,6 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 --    vim.loop.fs_stat() 检查文件/目录是否存在
 --    如果不存在，则执行安装操作
 if not vim.loop.fs_stat(lazypath) then
-	print("正在安装 Lazy.nvim...")
-
 	-- 3. 使用 Git 克隆 Lazy.nvim 仓库
 	vim.fn.system({
 		"git", -- Git 命令
@@ -21,8 +19,6 @@ if not vim.loop.fs_stat(lazypath) then
 		"--branch=stable", -- 使用稳定版本分支
 		lazypath, -- 克隆到指定路径
 	})
-
-	print("Lazy.nvim 安装完成")
 end
 
 -- 4. 将 Lazy.nvim 添加到 Neovim 的运行时路径
@@ -33,9 +29,15 @@ vim.opt.rtp:prepend(lazypath)
 
 -- 5.分组加载插件
 require("lazy").setup({
+  -- 编辑插件
+  {
+    import = "plugins.editor",
+  },
 	-- UI 插件
 	{
 		import = "plugins.ui",
 		-- gruvbox 主题: lua/plugins/ui/gruvbox.lua
+		-- 图标插件: lua/plgins/ui/nvim-web-devicons.lua
+		-- Nvim-tree 文件浏览插件: lua/plugins/ui/nvim-tree.lua
 	},
 })
