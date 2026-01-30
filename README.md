@@ -26,8 +26,8 @@
 
 ### 行移动
 
-- <kbd>Shift</kbd>+<kbd>j</kbd>: 行下移
-- <kbd>Shift</kbd>+<kbd>k</kbd>: 行上移
+- <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>j</kbd>: 行下移
+- <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>k</kbd>: 行上移
 
 ### Buffer相关
 
@@ -252,3 +252,69 @@ end
   - `nvim-web-devicons.lua`
  - 加载 `lua/plugins/editor` 中插件
   - `snacks.lua`
+
+
+### 添加lualine
+
+- `lua/plugins/ui/lualine.lua`
+- 需要详细学习lualine的配置
+
+### 加入 VeryLazy command
+
+生命周期
+
+```c
+Neovim 启动
+    ↓
+加载 lazyvim.config.init()
+    ↓
+加载基本配置（options）
+    ↓
+lazy.nvim 开始加载插件
+    ↓
+加载核心插件（LazyVim、snacks.nvim 等）
+    ↓
+加载其他插件（按优先级）
+    ↓
+lazy.nvim 触发 VeryLazy 事件
+    ↓
+执行所有监听 VeryLazy 的 autocmd
+    ↓
+    ├── LazyVim 的初始化（keymaps、autocmds 等）
+    ├── 加载 event = "VeryLazy" 的插件
+    └── 执行 LazyVim.on_very_lazy() 注册的函数
+    ↓
+Neovim 完全就绪
+```
+
+- `lua/pixvim/util/init.lua
+- `function M.on_very_lazy(fn)`
+
+
+### 安装 nui.nvim 和 noice.nvim
+
+优化 message, cmdline, popupmenu.
+
+- `lua/plugins/ui/nui.lua`
+- `lua/plugins/ui/noice.lua`
+
+### 安装 mini.icons
+
+图标库。
+
+- `lua/plugins/ui/mini-icons.lua
+
+### 配置lsp
+
+* lsp的配置采用最新版本的方案
+* 参考 [新版lsp笔记](./devdoc/00_nvim011版本lsp还需要nvim-lspconfig插件吗.md)
+* 另外仍然需要 `nvim-lspconfig` 插件具体参考 [笔记](./devdoc/00_nvim011版本lsp还需要nvim-lspconfig插件吗.md)
+* 解决 `lua_ls` lsp不能提示 `neovim api` 的问题, [笔记](./devdoc/03_lsp_支持neovim的api.md)
+
+## 2026-01-30
+
+## 配置 lazydev.nvim 插件
+
+- `lua/plugins/coding/lazydev.lua`
+
+

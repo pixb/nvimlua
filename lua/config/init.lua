@@ -74,11 +74,21 @@ M.config = {
       Value         = " ",
       Variable      = "󰀫 ",
     },
-  }
-,
+  },
 }
 
+
+
+local group = vim.api.nvim_create_augroup("PixVim", { clear = true })
+vim.api.nvim_create_autocmd("User", {
+  group = group,
+  pattern = "VeryLazy",
+  callback = function()
+  end
+})
+
 -- 启动加载配置
+require("config.lsp")
 require("config.options")
 require("config.lazy")
 require("config.keymaps")
@@ -88,5 +98,7 @@ _G.PixVim = require("pixvim.util")
 PixVim.config = M.config
 -- 加载util.setup()
 PixVim.root.setup()
+
+
 
 return M

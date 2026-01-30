@@ -162,7 +162,7 @@ function M.get(opts)
 	if opts and opts.normalize then
 		return ret
 	end
-	return M.is_win() and ret:gsub("/", "\\") or ret
+	return PixVim.is_win() and ret:gsub("/", "\\") or ret
 end
 
 function M.git()

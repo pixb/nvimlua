@@ -40,4 +40,12 @@ require("lazy").setup({
 		-- 图标插件: lua/plgins/ui/nvim-web-devicons.lua
 		-- Nvim-tree 文件浏览插件: lua/plugins/ui/nvim-tree.lua
 	},
+  -- lsp 插件
+  {
+    import = "plugins.lsp"
+  }, 
+  -- coding
+  {
+    import = "plugins.coding"
+  }
 })
