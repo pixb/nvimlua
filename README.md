@@ -313,8 +313,81 @@ Neovim 完全就绪
 
 ## 2026-01-30
 
-## 配置 lazydev.nvim 插件
+### 配置 lazydev.nvim 插件
 
 - `lua/plugins/coding/lazydev.lua`
 
+### 配置 blink
 
+- `lua/plugins/lsp/blink.lua`
+
+### 配置 which-key.nvim 插件
+
+- `lua/plugins/editor/which-key.lua`
+
+## 2026-01-31
+
+### 梳理 snacks 插件
+
+- `lua/plugins/editor/snacks.lua`
+
+==文件浏览器==
+
+文件浏览器, option
+
+```lua
+  opts = {
+    explorer = {}
+  },
+```
+
+==缩进可视化==
+
+```lua
+indent = { enabled = true },
+```
+
+==输入框美化==
+
+```lua
+input = { enabled = true },
+```
+==通知框美化==
+```
+notifier = { enabled = true },
+```
+
+==作用域模块==
+==代码作用域分析==
+==高亮缩进线==
+
+```lua
+scope = { enabled = true },
+```
+
+==平滑滚动==
+
+```lua
+scroll = { enabled = true },
+```
+
+==状态栏，自定义状态栏==
+
+```lua
+statuscolumn = { enabled = false }, -- we set this in options.lua
+```
+
+==切换功能==
+
+```lua
+toggle = { map = PixVim.safe_keymap_set },
+```
+
+==单词高亮==
+
+```lua
+words = { enabled = true },
+```
+
+
+### nvim-treesitter ?

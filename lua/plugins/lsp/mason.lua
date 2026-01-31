@@ -40,16 +40,6 @@ return {
     "mason-org/mason-lspconfig.nvim",
     dependencies = { "mason-org/mason.nvim" },
     config = function()
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          "lua_ls",
-          "ts_ls",
-          "pyright",
-          "rust_analyzer",
-          "gopls"
-        },
-        automatic_installation = true
-      })
     end
   },
 }

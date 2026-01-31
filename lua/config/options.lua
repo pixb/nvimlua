@@ -4,6 +4,9 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+vim.g.autoformat = true
+vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
+
 -- Snacks 动画
 -- `vim.g.snacks_animate` 是一个全局选项，用于控制是否启用 Neovim 的动画效果
 -- 设置为 `true` 时，启用各种 UI 动画，如：
@@ -66,11 +69,11 @@ opt.completeopt = "menu,menuone,noselect"
 
 -- Hide * markup for bold and italic, but not markers with substitutions
 -- 可隐藏标记的显示方式: 2精简显示
-opt.conceallevel = 2 
+opt.conceallevel = 2
 
 -- Confirm to save changes before exiting modified buffer
 -- 开启退出前确认
-opt.confirm = true 
+opt.confirm = true
 
 -- 界面非文字边框
 opt.fillchars = {
@@ -98,7 +101,7 @@ opt.foldmethod = "indent"
 opt.foldtext = ""
 
 -- 让 gq 使用 LSP 格式化
-opt.formatexpr = "v:lua.vim.lsp.formatexpr()"
+-- opt.formatexpr = "v:lua.PixVim.format.formatexpr()"
 
 -- 编辑器在自动换行、注释处理和列表排版
 -- j: 智能连接：删除换行符（按 `J`）连接两行注释时，自动删除多余的注释符
@@ -109,7 +112,7 @@ opt.formatexpr = "v:lua.vim.lsp.formatexpr()"
 -- l: 长行保护：在插入模式下，如果一行已经很长了，不要自动折行。
 -- n: 识别列表：格式化时能识别编号列表（如 `1.`），并保持缩进对齐。
 -- t: 自动换行：根据 `textwidth` 自动折行代码（通常不建议代码开启，文档建议开启）。
-opt.formatoptions = "jcroqlnt" 
+opt.formatoptions = "jcroqlnt"
 
 -- 设置搜索命令为 ripgrep
 opt.grepprg = "rg --vimgrep"
@@ -118,7 +121,7 @@ opt.grepformat = "%f:%l:%c:%m"
 
 -- preview incremental substitute
 --  增量命令，输入命令时行内实时预览
-opt.inccommand = "nosplit" 
+opt.inccommand = "nosplit"
 
 -- 是 Neovim 中一个专门用于优化 **跳转列表（Jumplist）** 行为的选项。
 -- 它决定了当你使用 `Ctrl-O`（跳回）或 `Ctrl-I`（跳前）时，编辑器的光标移动和 UI 表现如何。
@@ -132,15 +135,15 @@ opt.laststatus = 3
 
 -- Wrap lines at convenient points
 -- 当一行文本太长需要折行显示时，不要在单词中间强行截断。
-opt.linebreak = true 
+opt.linebreak = true
 
 -- Show some invisible characters (tabs...
 -- Neovim 中用于**显示不可见字符**（如空格、Tab、换行符等）的开关
-opt.list = true 
+opt.list = true
 
 -- Enable mouse mode
 -- a: 所有模式支持鼠标
-opt.mouse = "a" 
+opt.mouse = "a"
 
 -- Maximum number of entries in a popup
 -- 补全的弹框最多显示行数
@@ -199,7 +202,7 @@ opt.splitkeep = "screen"
 opt.splitright = true
 
 -- 状态栏内容与外观
--- opt.statuscolumn = [[%!v:lua.LazyVim.statuscolumn()]]
+-- opt.statuscolumn = [[%!v:lua.PixVim.statuscolumn()]]
 opt.statuscolumn = "%s%=%{%v:relnum ? v:relnum : v:lnum%}"
 opt.termguicolors = true -- True color support
 opt.timeoutlen = vim.g.vscode and 1000 or 300 -- Lower than default (1000) to quickly trigger which-key

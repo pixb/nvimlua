@@ -1,4 +1,5 @@
 return {
+  -- 优化 message, cmdline, popupmenu.
   -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
   "folke/noice.nvim",
   event = "VeryLazy",
