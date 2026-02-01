@@ -38,12 +38,21 @@
 - <kdb>LEADER<kdb>+<kbd>b</kbd><kbd>b</kbd>: 另一个Buffer
 - <kdb>LEADER<kdb>+<kbd>`</kbd>: 另一个Buffer
 
-### 文件浏览器nvim-tree
+### 文件浏览器snacks
 
 | 按键 | 说明 |
 | -------------- | --------------- |
-| <kbd>LEADER</kbd> + <kbd>E</kbd> | 打开/关闭文件浏览器 |
-| <kbd>LEADER</kbd> + <kbd>F</kbd> | 定位当前文件 |
+| <kbd>LEADER</kbd> + <kbd>e</kbd> | 打开/关闭文件浏览器(root目录) |
+| <kbd>LEADER</kbd> + <kbd>E</kbd> | 打开/关闭文件浏览器(working dir) |
+| <kbd>LEADER</kbd> + <kbd>fe</kbd> | 打开/关闭文件浏览器(root目录) |
+| <kbd>LEADER</kbd> + <kbd>fE</kbd> | 打开/关闭文件浏览器(working dir) |
+
+### 通知
+
+| 按键 | 说明 |
+| -------------- | --------------- |
+| <kbd>LEADER</kbd> + <kbd>n</kbd> | 打开查看通知的历史 |
+| <kbd>LEADER</kbd> + <kbd>un</kbd> | 取消所有显示的通知 |
 
 ## 选项
 
