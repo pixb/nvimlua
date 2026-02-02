@@ -44,8 +44,8 @@
 | -------------- | --------------- |
 | <kbd>LEADER</kbd> + <kbd>e</kbd> | 打开/关闭文件浏览器(root目录) |
 | <kbd>LEADER</kbd> + <kbd>E</kbd> | 打开/关闭文件浏览器(working dir) |
-| <kbd>LEADER</kbd> + <kbd>fe</kbd> | 打开/关闭文件浏览器(root目录) |
-| <kbd>LEADER</kbd> + <kbd>fE</kbd> | 打开/关闭文件浏览器(working dir) |
+| <kbd>LEADER</kbd> + <kbd>fe</kbd> | 定位文件位置在文件浏览器(root目录) |
+| <kbd>LEADER</kbd> + <kbd>fE</kbd> | 定位文件位置在文件浏览器(working dir) |
 
 ### 通知
 
@@ -53,6 +53,53 @@
 | -------------- | --------------- |
 | <kbd>LEADER</kbd> + <kbd>n</kbd> | 打开查看通知的历史 |
 | <kbd>LEADER</kbd> + <kbd>un</kbd> | 取消所有显示的通知 |
+
+### Picker中切换root目录
+
+| 按键 | 说明 |
+| -------------- | --------------- |
+| <kbd>Alt</kbd> + <kbd>c</kbd> | Picker打开时，切换root目录 |
+
+### Snacks picker按键
+
+| 按键 | 说明 |
+| -------------- | --------------- |
+| <kbd>LEADER</kbd> + <kbd>,</kbd> | Picker Buffers |
+
+### treesitter
+
+### 按键映射表
+
+| 按键 | 功能 | 目标对象 | 说明 |
+|-------|-------|-----------|------|
+| <kbd>]</kbd><kbd>f</kbd> | 跳转到下一个函数的开始 | `@function.outer` | 移动光标到下一个函数的起始位置 |
+| <kbd>]</kbd><kbd>F</kbd> | 跳转到下一个函数的结束 | `@function.outer` | 移动光标到下一个函数的结束位置 |
+| <kbd>[</kbd><kbd>f</kbd> | 跳转到上一个函数的开始 | `@function.outer` | 移动光标到上一个函数的起始位置 |
+| <kbd>[</kbd><kbd>F</kbd> | 跳转到上一个函数的结束 | `@function.outer` | 移动光标到上一个函数的结束位置 |
+| <kbd>]</kbd><kbd>c</kbd> | 跳转到下一个类的开始 | `@class.outer` | 移动光标到下一个类的起始位置 |
+| <kbd>]</kbd><kbd>C</kbd> | 跳转到下一个类的结束 | `@class.outer` | 移动光标到下一个类的结束位置 |
+| <kbd>[</kbd><kbd>c</kbd> | 跳转到上一个类的开始 | `@class.outer` | 移动光标到上一个类的起始位置 |
+| <kbd>[</kbd><kbd>C</kbd> | 跳转到上一个类的结束 | `@class.outer` | 移动光标到上一个类的结束位置 |
+| <kbd>]</kbd><kbd>a</kbd> | 跳转到下一个参数的开始 | `@parameter.inner` | 移动光标到下一个参数的起始位置 |
+| <kbd>]</kbd><kbd>A</kbd> | 跳转到下一个参数的结束 | `@parameter.inner` | 移动光标到下一个参数的结束位置 |
+| <kbd>[</kbd><kbd>a</kbd> | 跳转到上一个参数的开始 | `@parameter.inner` | 移动光标到上一个参数的起始位置 |
+| <kbd>[</kbd><kbd>A</kbd> | 跳转到上一个参数的结束 | `@parameter.inner` | 移动光标到上一个参数的结束位置 |
+
+### 按键规律
+
+| 方向 | 开始位置 | 结束位置 |
+|-------|-----------|-----------|
+| 下一个 | <kbd>]</kbd> + 小写字母 | <kbd>]</kbd> + 大写字母 |
+| 上一个 | <kbd>[</kbd> + 小写字母 | <kbd>[</kbd> + 大写字母 |
+
+### 对象类型映射
+
+| 字母 | 对象类型 | Treesitter 查询 |
+|-------|-----------|---------------|
+| <kbd>f</kbd> | 函数 | `@function.outer` |
+| <kbd>c</kbd> | 类 | `@class.outer` |
+| <kbd>a</kbd> | 参数 | `@parameter.inner` |
+
 
 ## 选项
 
@@ -398,5 +445,43 @@ toggle = { map = PixVim.safe_keymap_set },
 words = { enabled = true },
 ```
 
+==picker==
 
-### nvim-treesitter ?
+- 选择器
+- 注意切换目录快捷键 `Alt + C` 与 `iTerm2` 终端按键冲突导致无法触发。
+- 打开Picker，按 <kbd>Alt</kbd> +  <kdb>c</kbd>: 切换root目录
+
+### nvim-treesitter
+
+- 配置语法分析插件 `treesitter`.
+- `lua/plugins/lsp/treesitter.lua`
+- `nvim-treesitter/nvim-treesitter`
+- 版本保持最新
+- 处理编译相关的配置
+- 支持缩进，高亮，折叠
+- `nvim-treesitter-textobjects`: 语法增强插件函数，类，参数，条件语句
+- `windwp/nvim-ts-autotag`: 自动关闭标签插件
+- `lua/pixvim/util/treesitter.lua`: 工具类
+
+==常用 Treesitter 查询==
+
+可以用于跳转
+
+| 查询 | 说明 |
+|-------|------|
+| `@function.outer` | 整个函数 |
+| `@function.inner` | 函数体 |
+| `@class.outer` | 整个类 |
+| `@class.inner` | 类体 |
+| `@parameter.outer` | 整个参数（包括类型） |
+| `@parameter.inner` | 参数名称 |
+| `@variable.outer` | 整个变量声明 |
+| `@variable.inner` | 变量名 |
+| `@statement.outer` | 整个语句 |
+| `@comment.outer` | 整个注释 |
+| `@string.outer` | 整个字符串（包括引号） |
+| `@string.inner` | 字符串内容（不包括引号） |
+
+## 2026-02-02
+
+### markdown相关
