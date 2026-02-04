@@ -203,8 +203,8 @@ opt.splitkeep = "screen"
 opt.splitright = true
 
 -- 状态栏内容与外观
--- opt.statuscolumn = [[%!v:lua.PixVim.statuscolumn()]]
-opt.statuscolumn = "%s%=%{%v:relnum ? v:relnum : v:lnum%}"
+opt.statuscolumn = [[%!v:lua.PixVim.statuscolumn()]]
+-- opt.statuscolumn = "%s%=%{%v:relnum ? v:relnum : v:lnum%}"
 opt.termguicolors = true -- True color support
 opt.timeoutlen = vim.g.vscode and 1000 or 300 -- Lower than default (1000) to quickly trigger which-key
 opt.undofile = true

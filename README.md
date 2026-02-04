@@ -2,6 +2,10 @@
 
 我的neovim 配置, 抱着学习的态度，完全掌控的自己的配置慢慢打磨。
 
+> [!TIP] 缘起
+> 把 `LazyVim` 作为配置一点点搬到这个项目中。
+> `LazyVim` 是一个插件，而我这里直接配置。
+
 ## 快捷键
 
 快捷键是使用的关键, 所以放在最前面。
@@ -99,6 +103,12 @@
 | <kbd>f</kbd> | 函数 | `@function.outer` |
 | <kbd>c</kbd> | 类 | `@class.outer` |
 | <kbd>a</kbd> | 参数 | `@parameter.inner` |
+
+### 代码错误检查开关
+
+| 按键 | 说明 |
+| -------------- | --------------- |
+| <kbd>LEADER</kbd> + <kbd>t</kbd> + <kbd>d</kbd> | 开启关闭错误检查 |
 
 ## 选项
 
@@ -514,6 +524,28 @@ words = { enabled = true },
 ==定义开关lint检查==
 
 自己认为非常重要，可以清爽的显示。
+
+`lua/pixvim/plugins/coding/linting.lua`
+
+```lua
+-- 完整的诊断控制快捷键
+vim.keymap.set("n", "<leader>td", function()
+ local bufnr = 0
+ local is_enabled = vim.diagnostic.is_enabled({ bufnr = bufnr })
+
+ if is_enabled then
+  vim.diagnostic.enable(false, { bufnr = bufnr })
+  vim.notify("Diagnostics disabled", vim.log.levels.INFO)
+ else
+  vim.diagnostic.enable(true, { bufnr = bufnr })
+  vim.notify("Diagnostics enabled", vim.log.levels.INFO)
+ end
+end, { desc = "Toggle diagnostics" })
+```
+
+### 重新改变文件结构
+
+使得项目结构和 LazyVim 基本结构一致
 
 ### 再次梳理流程
 
