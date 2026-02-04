@@ -1,10 +1,11 @@
 -- 配置
-
+print("==== lua/pixvim/config/options.lua load... ====")
 -- 设置 leader 键
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 vim.g.autoformat = true
+vim.g.markdown_lint = false
 vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 
 -- Snacks 动画
@@ -48,17 +49,17 @@ opt.autoread = true -- 自动读取外部修改的文件
 opt.clipboard = "unnamedplus"
 -- 如果是在 SSH 环境下，利用 OSC 52 协议同步剪贴板
 if vim.env.SSH_CONNECTION then
-    vim.g.clipboard = {
-        name = 'OSC 52',
-        copy = {
-            ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-            ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
-        },
-        paste = {
-            ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
-            ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
-        },
-    }
+	vim.g.clipboard = {
+		name = "OSC 52",
+		copy = {
+			["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+			["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+		},
+		paste = {
+			["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+			["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+		},
+	}
 end
 
 -- 补全菜单设置
@@ -77,20 +78,20 @@ opt.confirm = true
 
 -- 界面非文字边框
 opt.fillchars = {
-  foldopen = "",
-  foldclose = "",
-  fold = " ", -- 隐藏折叠线条
-  foldsep = " ",
-  diff = "╱",
-  eob = " ", -- 隐藏文字末尾的波浪线
+	foldopen = "",
+	foldclose = "",
+	fold = " ", -- 隐藏折叠线条
+	foldsep = " ",
+	diff = "╱",
+	eob = " ", -- 隐藏文字末尾的波浪线
 
-  horiz     = '━',
-  horizup   = '┻',
-  horizdown = '┳',
-  vert      = '┃',
-  vertleft  = '┨',
-  vertright = '┣',
-  verthoriz = '╋',
+	horiz = "━",
+	horizup = "┻",
+	horizdown = "┳",
+	vert = "┃",
+	vertleft = "┨",
+	vertright = "┣",
+	verthoriz = "╋",
 }
 
 -- 默认折叠级别

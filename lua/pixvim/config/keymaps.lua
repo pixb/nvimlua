@@ -4,47 +4,47 @@ local M = {}
 -- 1. 如果 Lazy.nvim 已为该快捷键注册了延迟加载（lazy key）处理程序，则**不创建**此快捷键映射；
 -- 2. 默认启用 `silent = true`（即不显示命令行回显），除非显式设为 false。
 function M.safe_keymap_set(mode, lhs, rhs, opts)
-  -- 获取 Lazy.nvim 内部的按键处理器，用于检查是否已存在 lazy key handler
-  local keys = require("lazy.core.handler").handlers.keys
-  ---@cast keys LazyKeysHandler  -- 告诉 LSP/静态分析工具 keys 的类型
+	-- 获取 Lazy.nvim 内部的按键处理器，用于检查是否已存在 lazy key handler
+	local keys = require("lazy.core.handler").handlers.keys
+	---@cast keys LazyKeysHandler  -- 告诉 LSP/静态分析工具 keys 的类型
 
-  -- 将 mode 标准化为字符串列表：
-  -- 如果传入的是单个字符串（如 "n"），转为 { "n" }；
-  -- 如果传入的是表（如 { "n", "v" }），则保持原样。
-  local modes = type(mode) == "string" and { mode } or mode
+	-- 将 mode 标准化为字符串列表：
+	-- 如果传入的是单个字符串（如 "n"），转为 { "n" }；
+	-- 如果传入的是表（如 { "n", "v" }），则保持原样。
+	local modes = type(mode) == "string" and { mode } or mode
 
-  -- 过滤掉那些已经被 Lazy.nvim 注册为 lazy key 的模式（mode）：
-  -- 例如，如果 lhs="<leader>ff" 在 normal 模式下已被 lazy 插件声明，
-  -- 则从 modes 中移除 "n"，避免重复绑定。
-  modes = vim.tbl_filter(function(m)
-    -- keys:have(lhs, m) 检查在模式 m 下，lhs 是否已被 lazy 处理器接管
-    return not (keys.have and keys:have(lhs, m))
-  end, modes)
+	-- 过滤掉那些已经被 Lazy.nvim 注册为 lazy key 的模式（mode）：
+	-- 例如，如果 lhs="<leader>ff" 在 normal 模式下已被 lazy 插件声明，
+	-- 则从 modes 中移除 "n"，避免重复绑定。
+	modes = vim.tbl_filter(function(m)
+		-- keys:have(lhs, m) 检查在模式 m 下，lhs 是否已被 lazy 处理器接管
+		return not (keys.have and keys:have(lhs, m))
+	end, modes)
 
-  -- 只有当还有未被 lazy 接管的模式时，才创建实际的快捷键映射
-  if #modes > 0 then
-    opts = opts or {}  -- 确保 opts 是一个表
+	-- 只有当还有未被 lazy 接管的模式时，才创建实际的快捷键映射
+	if #modes > 0 then
+		opts = opts or {} -- 确保 opts 是一个表
 
-    -- 默认启用 silent（静默模式），除非用户显式设置 opts.silent = false
-    opts.silent = opts.silent ~= false
+		-- 默认启用 silent（静默模式），除非用户显式设置 opts.silent = false
+		opts.silent = opts.silent ~= false
 
-    -- 如果设置了 remap 且当前**不是**在 VS Code Neovim 环境中，
-    -- 则移除 remap 选项（因为大多数情况下不需要递归映射，且可能引发问题）
-    if opts.remap and not vim.g.vscode then
-      ---@diagnostic disable-next-line: no-unknown
-      opts.remap = nil  -- 静默移除，避免警告
-    end
+		-- 如果设置了 remap 且当前**不是**在 VS Code Neovim 环境中，
+		-- 则移除 remap 选项（因为大多数情况下不需要递归映射，且可能引发问题）
+		if opts.remap and not vim.g.vscode then
+			---@diagnostic disable-next-line: no-unknown
+			opts.remap = nil -- 静默移除，避免警告
+		end
 
-    -- 使用 Snacks.keymap.set（可能是对 vim.keymap.set 的进一步封装）来设置快捷键
-    vim.keymap.set(modes, lhs, rhs, opts)
-  end
+		-- 使用 Snacks.keymap.set（可能是对 vim.keymap.set 的进一步封装）来设置快捷键
+		vim.keymap.set(modes, lhs, rhs, opts)
+	end
 end
 
 map = M.safe_keymap_set
 
 -- ESC
 -- keymap.set("i", "jk", "<Esc>")
-map({"i"}, "jk", "<Esc>")
+map({ "i" }, "jk", "<Esc>")
 
 -- better up/down
 --
@@ -111,6 +111,19 @@ map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 -- 反引号 ` 在 Vim 中传统上就代表“交替文件”（#），此处延续这一惯例
 map("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 
+-- 完整的诊断控制快捷键
+vim.keymap.set("n", "<leader>td", function()
+	local bufnr = 0
+	local is_enabled = vim.diagnostic.is_enabled({ bufnr = bufnr })
+
+	if is_enabled then
+		vim.diagnostic.enable(false, { bufnr = bufnr })
+		vim.notify("Diagnostics disabled", vim.log.levels.INFO)
+	else
+		vim.diagnostic.enable(true, { bufnr = bufnr })
+		vim.notify("Diagnostics enabled", vim.log.levels.INFO)
+	end
+end, { desc = "Toggle diagnostics" })
 
 -- 切换文件树
 -- map("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true, desc = "切换文件树" })

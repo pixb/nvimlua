@@ -1,6 +1,6 @@
 # nvimlua
 
-我的neovim配置, 抱着学习的态度，完全掌控的自己的配置慢慢打磨。
+我的neovim 配置, 抱着学习的态度，完全掌控的自己的配置慢慢打磨。
 
 ## 快捷键
 
@@ -100,7 +100,6 @@
 | <kbd>c</kbd> | 类 | `@class.outer` |
 | <kbd>a</kbd> | 参数 | `@parameter.inner` |
 
-
 ## 选项
 
 | 设置 leader 键配置 | 说明 |
@@ -194,10 +193,15 @@ require("config.options")
 
 ```lua
 -- 切换文件树
-vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent = true, desc = '切换文件树' })
+vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true, desc = "切换文件树" })
 
 -- 定位当前文件
-vim.keymap.set('n', '<leader>f', ':NvimTreeFindFile<CR>', { noremap = true, silent = true, desc = '定位当前文件' })
+vim.keymap.set(
+ "n",
+ "<leader>f",
+ ":NvimTreeFindFile<CR>",
+ { noremap = true, silent = true, desc = "定位当前文件" }
+)
 ```
 
 ### 参考LazyVim配置选项
@@ -289,26 +293,25 @@ end
 
 ==整体流程==
 
- - `init.lua`
-  - 加载 `lua/config/init.lua`
-    - 加载 `lua/cofing/options.lua`
-    - 加载 `lua/config/lazy.lua`
-    - 加载 `lua/config/keymap.lua`
-    - PixVim: 设置 `require("pixvim.util")`
-    - `PixVim.config = M.config`
-    - `PixVim.root.setup()`
+- `init.lua`
+- 加载 `lua/config/init.lua`
+  - 加载 `lua/cofing/options.lua`
+  - 加载 `lua/config/lazy.lua`
+  - 加载 `lua/config/keymap.lua`
+  - PixVim: 设置 `require("pixvim.util")`
+  - `PixVim.config = M.config`
+  - `PixVim.root.setup()`
 
 ==加载插件==
 
 - 加载 `lua/config/lazy.lua`
- - `folke/lazy.nvim` 初始化
- - 加载 `lua/plugins/ui` 中插件
-  - `bufferline.lua`
-  - `gruvbox.lua`
-  - `nvim-web-devicons.lua`
- - 加载 `lua/plugins/editor` 中插件
-  - `snacks.lua`
-
+- `folke/lazy.nvim` 初始化
+- 加载 `lua/plugins/ui` 中插件
+- `bufferline.lua`
+- `gruvbox.lua`
+- `nvim-web-devicons.lua`
+- 加载 `lua/plugins/editor` 中插件
+- `snacks.lua`
 
 ### 添加lualine
 
@@ -346,7 +349,6 @@ Neovim 完全就绪
 - `lua/pixvim/util/init.lua
 - `function M.on_very_lazy(fn)`
 
-
 ### 安装 nui.nvim 和 noice.nvim
 
 优化 message, cmdline, popupmenu.
@@ -362,10 +364,10 @@ Neovim 完全就绪
 
 ### 配置lsp
 
-* lsp的配置采用最新版本的方案
-* 参考 [新版lsp笔记](./devdoc/00_nvim011版本lsp还需要nvim-lspconfig插件吗.md)
-* 另外仍然需要 `nvim-lspconfig` 插件具体参考 [笔记](./devdoc/00_nvim011版本lsp还需要nvim-lspconfig插件吗.md)
-* 解决 `lua_ls` lsp不能提示 `neovim api` 的问题, [笔记](./devdoc/03_lsp_支持neovim的api.md)
+- lsp的配置采用最新版本的方案
+- 参考 [新版lsp笔记](./devdoc/00_nvim011版本lsp还需要nvim-lspconfig插件吗.md)
+- 另外仍然需要 `nvim-lspconfig` 插件具体参考 [笔记](./devdoc/00_nvim011版本lsp还需要nvim-lspconfig插件吗.md)
+- 解决 `lua_ls` lsp不能提示 `neovim api` 的问题, [笔记](./devdoc/03_lsp_支持neovim的api.md)
 
 ## 2026-01-30
 
@@ -408,7 +410,9 @@ indent = { enabled = true },
 ```lua
 input = { enabled = true },
 ```
+
 ==通知框美化==
+
 ```
 notifier = { enabled = true },
 ```
@@ -485,3 +489,147 @@ words = { enabled = true },
 ## 2026-02-02
 
 ### markdown相关
+
+- `stevearc/conform.nvim`:  格式化插件
+- `mfussenegger/nvim-lint`: nvim-lint插件
+- `iamcco/markdown-preview.nvim`: 语言markdown
+- `MeanderingProgrammer/render-markdown.nvim`: 在 `neovim` 中直接渲染 `markdown`.
+
+### formatting格式化插件
+
+关于格式化,定义工具类，引入插件，初始化。
+
+- 工具定义: [format.lua](./lua/pixvim/util/format.lua)
+- 插件引入: [formatting.lua](./lua/plugins/coding/formatting.lua)
+- 初始化：[init.lua](./lua/config/init.lua)
+
+### lint相关
+
+- 插件引入: [linting.lua](./lua/plugins/coding/linting.lua)
+
+==markdwon默认关闭Lint==
+
+- 在 [autocmds.lua](./lua/config/autocmds.lua) 中定义。
+
+==定义开关lint检查==
+
+自己认为非常重要，可以清爽的显示。
+
+### 再次梳理流程
+
+==主流程==
+
+```mermaid
+graph TB
+    A["init.lua"] --> B["lua/config/lazy.lua"]
+    B --> C[加载主插件配置lua/pixvim/pulugins/init.lua]
+    B --> D[加载其他插件lua/pixvim/plugins/...]
+
+    style A fill:#e7f5ff
+    style B fill:#d3f9d8
+    style C fill:#ffe3e3
+    style D fill:#e5dbff
+    style D fill:#fff4e6
+```
+
+- 首先入口 `init.lua`, 首先加载 `lua/config/lazy.lua`
+- `lua/config/lazy.lua`
+  - `lazy.vim` 插件安装的配置。
+  - 启动 `lazy.vim` 加载插件。
+  - 首先加载 `lua/pixvim/plugins/init.lua`
+  - 再加载其他插件
+
+==pixvim插件init流程==
+
+```mermaid
+graph LR
+    A["load: lua/pixvim/plugins/init.lua"] --> B["load: lua/pixvim/config/init.lua"]
+    A --> C["call: lua/pixvim/config/init.lua M.init()"]
+    A --> D[加载lazy.nvim, snacks.nvim 插件]
+
+    style A fill:#e7f5ff
+    style B fill:#d3f9d8
+    style C fill:#ffe3e3
+    style D fill:#e5dbff
+    style D fill:#fff4e6
+```
+
+- `lua/pixvim/plugins/init.lua`
+  - `lua/pixvim/config.lua init()` 配置初始化
+  - 加载基本插件：`lazy.nvim`, `snacks.nvim`.
+- `lua/pixvim/config/init.lua` 加载
+  - 加载 `lua/lazyvim/util/init.lua` 赋值 `_G.LazyVim`.
+  - 定义 `M={}`.
+  - 定义 `M.version`.
+  - 定义 `local defaults`.
+  - 定义 `M.json`
+  - 定义 `function M.json.load()`
+  - 定义 `local options`
+  - 定义 `local lazy_clipboard`
+  - 定义 `function M.setup(opts)`
+  - 定义 `function M.get_kind_filter(buf)`
+  - 定义 `function M.load(name)`
+  - 定义 `M.did_init`
+  - 定义 `M._options`
+  - 定义 `M.init()`
+  - 定义 `local default_extras`
+  - 定义 `function M.get_defaults()`
+  - 定义 `setmetatable()`: 设置元表
+
+### lua/pixvim/config/init.lua 流程
+
+==lua/pixvim/config/init.lua M.init()方法流程==
+
+```mermaid
+graph LR
+    A["M.init()方法流程"] --> B["(1). PixVim.lazy_notify()"]
+    A --> C["(2). M.load(options)"]
+    A --> D["(3). 保存默认选项intentexpr, foldmethod, foldexpr"]
+    A --> E["(4). 保存粘贴板指令，设为“”，加快启动速度"]
+    A --> F["(5). 插件启动"]
+
+    style A fill:#e7f5ff
+    style B fill:#d3f9d8
+    style C fill:#ffe3e3
+    style D fill:#e5dbff
+    style E fill:#fff4e6
+```
+
+- `lua/pixvim/plugins/init.lua`
+  - `lua/pixvim/config.lua init()` 配置初始化
+  - 加载基本插件：`lazy.nvim`, `snacks.nvim`.
+- `lua/pixvim/config/init.lua` 加载
+  - 加载 `lua/lazyvim/util/init.lua` 赋值 `_G.LazyVim`.
+  - 定义 `M={}`.
+  - 定义 `M.version`.
+  - 定义 `local defaults`.
+  - 定义 `M.json`
+  - 定义 `function M.json.load()`
+  - 定义 `local options`
+  - 定义 `local lazy_clipboard`
+  - 定义 `function M.setup(opts)`
+  - 定义 `function M.get_kind_filter(buf)`
+  - 定义 `function M.load(name)`
+  - 定义 `M.did_init`
+  - 定义 `M._options`
+  - 定义 `M.init()`
+  - 定义 `local default_extras`
+  - 定义 `function M.get_defaults()`
+  - 定义 `setmetatable()`: 设置元表
+
+==lua/pixvim/config/init.lua M.load()方法流程==
+
+```mermaid
+graph LR
+    A["M.load()方法流程"] --> B["(1). 定义_load(mod)方法"]
+    A --> C["(2). 拼接pattern命令名"]
+    A --> D["(3). load options配置，执行命令"]
+    A --> E["(4). lazy buffer重绘"]
+    A --> F["(5). 执行命令"]
+
+    style A fill:#e7f5ff
+    style B fill:#d3f9d8
+    style C fill:#ffe3e3
+    style D fill:#e5dbff
+    style E fill:#fff4e6
+```

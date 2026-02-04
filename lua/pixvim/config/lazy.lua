@@ -1,5 +1,7 @@
 -- 安装 Lazy.nvim
 
+print("==== lua/config/lazy.lua start... ====")
+
 -- 1. 定义 Lazy.nvim 的安装路径
 --    vim.fn.stdpath('data') 获取 Neovim 的数据目录路径
 --    通常为: ~/.local/share/nvim

@@ -2,85 +2,84 @@
 
 ---@type LazyPicker
 local picker = {
-  name = "snacks",
-  commands = {
-    files = "files",
-    live_grep = "grep",
-    oldfiles = "recent",
-  },
+	name = "snacks",
+	commands = {
+		files = "files",
+		live_grep = "grep",
+		oldfiles = "recent",
+	},
 
-  ---@param source string
-  ---@param opts? snacks.picker.Config
-  open = function(source, opts)
-    return Snacks.picker.pick(source, opts)
-  end,
+	---@param source string
+	---@param opts? snacks.picker.Config
+	open = function(source, opts)
+		return Snacks.picker.pick(source, opts)
+	end,
 }
 if not PixVim.pick.register(picker) then
-  return {}
+	return {}
 end
 
-
 return {
-  -- 文件浏览器
-  {
-    desc = "Snacks File Explorer",
-    "folke/snacks.nvim",
-    -- 加载的优先级
-    priority = 1000,
-    lazy = false,
-    opts = { explorer = {} },
-    config = function(_, opts)
-      -- local notify = vim.notify
-      require("snacks").setup(opts)
-      -- HACK: restore vim.notify after snacks setup and let noice.nvim take over
-      -- this is needed to have early notifications show up in noice history
-      -- if PixVim.has("noice.nvim") then
-      --   vim.notify = notify
-      -- end
-    end,
-    -- 配置按键提示
-    keys = {
-      {
-        "<leader>fe",
-        function()
-          Snacks.explorer({ cwd = PixVim.root() })
-        end,
-        desc = "Explorer Snacks (root dir)",
-      },
-      {
-        "<leader>fE",
-        function()
-          Snacks.explorer()
-        end,
-        desc = "Explorer Snacks (cwd)",
-      },
-      { "<leader>e", "<leader>fe", desc = "Explorer Snacks (root dir)", remap = true },
-      { "<leader>E", "<leader>fE", desc = "Explorer Snacks (cwd)", remap = true },
-    },
-  },
+	-- 文件浏览器
+	{
+		desc = "Snacks File Explorer",
+		"folke/snacks.nvim",
+		-- 加载的优先级
+		priority = 1000,
+		lazy = false,
+		opts = { explorer = {} },
+		config = function(_, opts)
+			-- local notify = vim.notify
+			require("snacks").setup(opts)
+			-- HACK: restore vim.notify after snacks setup and let noice.nvim take over
+			-- this is needed to have early notifications show up in noice history
+			-- if PixVim.has("noice.nvim") then
+			--   vim.notify = notify
+			-- end
+		end,
+		-- 配置按键提示
+		keys = {
+			{
+				"<leader>fe",
+				function()
+					Snacks.explorer({ cwd = PixVim.root() })
+				end,
+				desc = "Explorer Snacks (root dir)",
+			},
+			{
+				"<leader>fE",
+				function()
+					Snacks.explorer()
+				end,
+				desc = "Explorer Snacks (cwd)",
+			},
+			{ "<leader>e", "<leader>fe", desc = "Explorer Snacks (root dir)", remap = true },
+			{ "<leader>E", "<leader>fE", desc = "Explorer Snacks (cwd)", remap = true },
+		},
+	},
 
-  {
-    "snacks.nvim",
-    opts = {
-      -- 缩进可视化
-      indent = { enabled = true },
-      -- 输入框美化
-      input = { enabled = true },
-      -- 通知框美化
-      notifier = { enabled = true },
-      -- 作用域模块
-      -- 代码作用域分析
-      -- 高亮缩进线
-      scope = { enabled = true },
-      -- 平滑滚动
-      scroll = { enabled = true },
-      -- 状态栏，自定义状态栏
-      statuscolumn = { enabled = false }, -- we set this in options.lua
-      -- 切换功能
-      toggle = { map = PixVim.safe_keymap_set },
-      -- 单词高亮
-      words = { enabled = true },
-    },
+	{
+		"snacks.nvim",
+		opts = {
+			-- 缩进可视化
+			indent = { enabled = true },
+			-- 输入框美化
+			input = { enabled = true },
+			-- 通知框美化
+			notifier = { enabled = true },
+			-- 作用域模块
+			-- 代码作用域分析
+			-- 高亮缩进线
+			scope = { enabled = true },
+			-- 平滑滚动
+			scroll = { enabled = true },
+			-- 状态栏，自定义状态栏
+			statuscolumn = { enabled = false }, -- we set this in options.lua
+			-- 切换功能
+			toggle = { map = PixVim.safe_keymap_set },
+			-- 单词高亮
+			words = { enabled = true },
+		},
     -- stylua: ignore
     keys = {
       { "<leader>n", function()
@@ -92,18 +91,18 @@ return {
       end, desc = "Notification History" },
       { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
     },
-  },
+	},
 
-  {
-    "snacks.nvim",
-    opts = {
-      -- 仪表板
-      dashboard = {
-        preset = {
-          pick = function(cmd, opts)
-            return PixVim.pick(cmd, opts)()
-          end,
-          header = [[
+	{
+		"snacks.nvim",
+		opts = {
+			-- 仪表板
+			dashboard = {
+				preset = {
+					pick = function(cmd, opts)
+						return PixVim.pick(cmd, opts)()
+					end,
+					header = [[
           ██╗      █████╗ ███████╗██╗   ██╗██╗   ██╗██╗███╗   ███╗          Z
           ██║     ██╔══██╗╚══███╔╝╚██╗ ██╔╝██║   ██║██║████╗ ████║      Z    
           ██║     ███████║  ███╔╝  ╚████╔╝ ██║   ██║██║██╔████╔██║   z       
@@ -124,39 +123,39 @@ return {
             { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
             { icon = " ", key = "q", desc = "Quit", action = ":qa" },
           },
-        },
-      },
-    },
-  },
-  -- 配置导航器,模糊搜索，文件选择，快速选择
-  {
-    "fokklke/snacks.nvim",
-    opts = {
-      -- 配置选择器
-      picker = {
-        win = {
-          input = {
-            keys = {
-              ["<a-c>"] = {
-                "toggle_cwd",
-                mode = { "n", "i" },
-              },
-            },
-          },
-        },
-        -- 定义触发动作
-        actions = {
-          ---@param p snacks.Picker
-          toggle_cwd = function(p)
-            local root = PixVim.root({ buf = p.input.filter.current_buf, normalize = true })
-            local cwd = vim.fs.normalize((vim.uv or vim.loop).cwd() or ".")
-            local current = p:cwd()
-            p:set_cwd(current == root and cwd or root)
-            p:find()
-          end,
-        },
-      },
-    },
+				},
+			},
+		},
+	},
+	-- 配置导航器,模糊搜索，文件选择，快速选择
+	{
+		"folke/snacks.nvim",
+		opts = {
+			-- 配置选择器
+			picker = {
+				win = {
+					input = {
+						keys = {
+							["<a-c>"] = {
+								"toggle_cwd",
+								mode = { "n", "i" },
+							},
+						},
+					},
+				},
+				-- 定义触发动作
+				actions = {
+					---@param p snacks.Picker
+					toggle_cwd = function(p)
+						local root = PixVim.root({ buf = p.input.filter.current_buf, normalize = true })
+						local cwd = vim.fs.normalize((vim.uv or vim.loop).cwd() or ".")
+						local current = p:cwd()
+						p:set_cwd(current == root and cwd or root)
+						p:find()
+					end,
+				},
+			},
+		},
     -- stylua: ignore
     keys = {
       { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
@@ -213,6 +212,5 @@ return {
       -- ui
       { "<leader>uC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
     },
-  },
-
+	},
 }
