@@ -6,6 +6,18 @@
 > 把 `LazyVim` 作为配置一点点搬到这个项目中。
 > `LazyVim` 是一个插件，而我这里直接配置。
 
+## 用了那些主要插件？
+
+编辑器主要使用了哪些插件，插件的作用是什么？
+
+| 插件名 | 作用 |
+| -------------- | --------------- |
+| akinsho/bufferline.nvim | Buffer栏，提供Buff显示和操作功能 |
+|  lewis6991/gitsigns.nvim | 提供符号列显示Git的变更标记<br>Git一些相关操作 |
+| ellisonleao/gruvbox.nvim  | 颜色主题 |
+| nvim-lualine/lualine.nvim  | 状态栏 |
+| nvim-mini/mini.pairs | 自动补全括号，跳过括号|
+
 ## 快捷键
 
 快捷键是使用的关键, 所以放在最前面。
@@ -691,3 +703,11 @@ graph LR
 ### 配置插件flash跳转及选择插件
 
 `lua/pixvim/plugins/editor/flash.lua`
+
+## 2026-02-06
+
+### 配置mini
+
+- `lua/pixvim/plugins/coding/minipairs.lua`
+- 自动补全括号，花括号，引号等配对字符串
+- 智能跳过右括号
