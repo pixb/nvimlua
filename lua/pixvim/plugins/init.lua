@@ -1,4 +1,3 @@
-print("==== lua/pixvim/plugins/init.lua start... ====")
 require("pixvim.config").init()
 
 return {

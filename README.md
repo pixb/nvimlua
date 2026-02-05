@@ -110,6 +110,28 @@
 | -------------- | --------------- |
 | <kbd>LEADER</kbd> + <kbd>t</kbd> + <kbd>d</kbd> | 开启关闭错误检查 |
 
+### Flash 插件快捷键
+
+| 按键 | 模式 | 说明 |
+|------|------|------|
+| <kbd>s</kbd> | 普通模式、可视模式、操作符等待模式 | Flash 跳转 |
+| <kbd>S</kbd> | 普通模式、可视模式、操作符等待模式 | Flash Treesitter 跳转 |
+| <kbd>r</kbd> | 操作符等待模式 | 远程 Flash |
+| <kbd>R</kbd> | 操作符等待模式、可视模式 | Treesitter 搜索 |
+| <kbd>Ctrl</kbd>+<kbd>s</kbd> | 命令行模式 | 切换 Flash 搜索 |
+| <kbd>Ctrl</kbd>+<kbd>Space</kbd> | 普通模式、可视模式、操作符等待模式 | Treesitter 增量选择 |
+
+==快捷键说明==
+
+| 按键 | 功能 | 详细说明 |
+|------|------|----------|
+| <kbd>s</kbd> | Flash 跳转 | 快速跳转到标签、光标位置等 |
+| <kbd>S</kbd> | Flash Treesitter | 基于 Treesitter 语法树的跳转 |
+| <kbd>r</kbd> | 远程 Flash | 远程跳转功能 |
+| <kbd>R</kbd> | Treesitter 搜索 | 基于 Treesitter 的搜索功能 |
+| <kbd>Ctrl</kbd>+<kbd>s</kbd> | 切换搜索 | 在命令行模式下切换 Flash 搜索 |
+| <kbd>Ctrl</kbd>+<kbd>Space</kbd> | 增量选择 | 模拟 nvim-treesitter 的增量选择功能 |
+
 ## 选项
 
 | 设置 leader 键配置 | 说明 |
@@ -665,3 +687,7 @@ graph LR
     style D fill:#e5dbff
     style E fill:#fff4e6
 ```
+
+### 配置插件flash跳转及选择插件
+
+`lua/pixvim/plugins/editor/flash.lua`

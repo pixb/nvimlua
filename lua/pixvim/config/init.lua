@@ -1,5 +1,3 @@
-print("==== lua/pixvim/config/init.lua start... ====")
-
 -- 1. 先定义 PixVim 工具模块,是util模块, 为其他模块提供基础
 _G.PixVim = require("pixvim.util")
 
@@ -169,7 +167,6 @@ local lazy_clipboard
 -- pixvim setup
 ---@param opts? LazyVimOptions
 function M.setup(opts)
-	print("==== lua/pixvim/config/init.lua M.setup() Run... ====")
 	options = vim.tbl_deep_extend("force", defaults, opts or {}) or {}
 
 	-- autocmds can be loaded lazily when not opening a file
@@ -237,9 +234,7 @@ M._options = {} ---@type vim.wo|vim.bo
 -- 加载模块
 ---@param name "autocmds" | "options" | "keymaps"
 function M.load(name)
-	print("==== lua/pixvim/config/init.lua M.load() name = " .. name)
 	local function _load(mod)
-		print("==== lua/pixvim/config/init.lua _load() mod = " .. mod)
 		-- 定义加载模块的方法，默认从缓存中加载
 		if require("lazy.core.cache").find(mod)[1] then
 			PixVim.try(function()
@@ -277,7 +272,6 @@ M.did_init = false
 -- (4). 保存粘贴板指令，设为“”，加快启动速度
 -- (5). 插件启动
 function M.init()
-	print("==== lua/pixvim/plugins/init.lua M.init() Run... ====")
 	-- 避免重复初始化
 	if M.did_init then
 		return
@@ -320,4 +314,3 @@ setmetatable(M, {
 })
 
 return M
-
