@@ -1,5 +1,4 @@
 -- 配置
-print("==== lua/pixvim/config/options.lua load... ====")
 -- 设置 leader 键
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
